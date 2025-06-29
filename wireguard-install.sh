@@ -66,7 +66,7 @@ function checkOS() {
 			exit 1
 		fi
   	elif [[ ${OS} == "amzn" ]]; then
-		if [[ ${VERSION_ID} -lt 2023 ]]; then
+		if [[ ${VERSION_ID} -lt 2022 ]]; then
 			echo "Your version of Amazon Linux (${VERSION_ID}) is not supported. Please use Amazon Linux 2023 or later"
 			exit 1
 		fi
@@ -214,7 +214,7 @@ function installWireGuard() {
 		fi
 		dnf install -y wireguard-tools iptables qrencode
   	elif [[ ${OS} == 'amzn' ]]; then
-		if [[ ${VERSION_ID} -lt 2023 ]]; then
+		if [[ ${VERSION_ID} -lt 2022 ]]; then
 			dnf install -y dnf-plugins-core
 			dnf copr enable -y jdoss/wireguard
 			dnf install -y wireguard-dkms
@@ -512,7 +512,7 @@ function uninstallWg() {
 			fi
    		elif [[ ${OS} == 'amzn' ]]; then
 			dnf remove -y --noautoremove wireguard-tools qrencode
-			if [[ ${VERSION_ID} -lt 2023 ]]; then
+			if [[ ${VERSION_ID} -lt 2022 ]]; then
 				dnf remove -y --noautoremove wireguard-dkms
 				dnf copr disable -y jdoss/wireguard
 			fi
