@@ -213,6 +213,13 @@ function installWireGuard() {
 			dnf install -y wireguard-dkms
 		fi
 		dnf install -y wireguard-tools iptables qrencode
+  	elif [[ ${OS} == 'amzn' ]]; then
+		if [[ ${VERSION_ID} -lt 2023 ]]; then
+			dnf install -y dnf-plugins-core
+			dnf copr enable -y jdoss/wireguard
+			dnf install -y wireguard-dkms
+		fi
+		dnf install -y wireguard-tools iptables qrencode
 	elif [[ ${OS} == 'centos' ]] || [[ ${OS} == 'almalinux' ]] || [[ ${OS} == 'rocky' ]]; then
 		if [[ ${VERSION_ID} == 8* ]]; then
 			yum install -y epel-release elrepo-release
@@ -500,6 +507,12 @@ function uninstallWg() {
 		elif [[ ${OS} == 'fedora' ]]; then
 			dnf remove -y --noautoremove wireguard-tools qrencode
 			if [[ ${VERSION_ID} -lt 32 ]]; then
+				dnf remove -y --noautoremove wireguard-dkms
+				dnf copr disable -y jdoss/wireguard
+			fi
+   		elif [[ ${OS} == 'amzn' ]]; then
+			dnf remove -y --noautoremove wireguard-tools qrencode
+			if [[ ${VERSION_ID} -lt 2023 ]]; then
 				dnf remove -y --noautoremove wireguard-dkms
 				dnf copr disable -y jdoss/wireguard
 			fi
