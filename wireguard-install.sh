@@ -65,6 +65,11 @@ function checkOS() {
 			echo "Your version of Fedora (${VERSION_ID}) is not supported. Please use Fedora 32 or later"
 			exit 1
 		fi
+  	elif [[ ${OS} == "amzn" ]]; then
+		if [[ ${VERSION_ID} -lt 2023 ]]; then
+			echo "Your version of Amazon Linux (${VERSION_ID}) is not supported. Please use Amazon Linux 2023 or later"
+			exit 1
+		fi
 	elif [[ ${OS} == 'centos' ]] || [[ ${OS} == 'almalinux' ]] || [[ ${OS} == 'rocky' ]]; then
 		if [[ ${VERSION_ID} == 7* ]]; then
 			echo "Your version of CentOS (${VERSION_ID}) is not supported. Please use CentOS 8 or later"
@@ -81,7 +86,7 @@ function checkOS() {
 			apk update && apk add virt-what
 		fi
 	else
-		echo "Looks like you aren't running this installer on a Debian, Ubuntu, Fedora, CentOS, AlmaLinux, Oracle or Arch Linux system"
+		echo "Looks like you aren't running this installer on a Debian, Ubuntu, Fedora, CentOS, AlmaLinux, Oracle, Amazon Linux or Arch Linux system"
 		exit 1
 	fi
 }
